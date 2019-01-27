@@ -15,12 +15,20 @@ const insertWord = (data, cb) => {
    return newModel.save(cb);
 }
 
-const findWord = (data) => {
-    model.find()
+const findDetectObj = (data) => {
+    return model.find()
+    // .where('prd_cls_cd').equals(data.clsCd)
+    // .find("cls_detect_obj.wordNm").equals(data.wordNm);
+    .populate({
+        path: 'cls_detect_obj',
+        match: { wordNm: data.wordNm},
+        select: 'wordNm'
+    })
 }
 
 module.exports = {
     findAll,
     findOne,
-    insertWord
+    insertWord,
+    findDetectObj
 }
